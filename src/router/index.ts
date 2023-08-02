@@ -37,9 +37,4 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  document.title = to.metaInfo.title ?? 'Default Page Title';
-  next();
-});
-
 export default router;
