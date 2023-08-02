@@ -1,29 +1,45 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import VueRouter from 'vue-router';
+import LoginView from '@/views/auth/LoginView.vue';
+import RegisterView from '@/views/auth/RegisterView.vue';
+
+import HomeView from '@/views/pages/home/HomeView.vue';
+import AboutView from '@/views/pages/about/AboutView.vue';
 
 Vue.use(VueRouter);
 
-const routes: Array<RouteConfig> = [
+const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'HomeView',
     component: HomeView,
+    meta: { title: 'Home' },
+  },
+  {
+    path: '/login',
+    name: 'LoginView',
+    component: LoginView,
+  },
+  {
+    path: '/register',
+    name: 'RegisterView',
+    component: RegisterView,
   },
   {
     path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    name: 'AboutView',
+    component: AboutView,
   },
 ];
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = to.metaInfo.title ?? 'Default Page Title';
+  next();
 });
 
 export default router;
